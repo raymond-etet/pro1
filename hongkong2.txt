@@ -1,0 +1,136 @@
+allow-lan: true
+external-controller: :9090
+tcp-concurrent: true
+unified-delay: true
+global-client-fingerprint: chrome
+geodata-mode: true
+dns:
+  default-nameserver:
+  - 1.1.1.1
+  - 119.29.29.29
+  - 8.8.8.8
+  - 223.5.5.5
+  enable: true
+  fake-ip-range: 198.18.0.1/16
+  fallback:
+  - tls://1.1.1.1
+  - tls://119.29.29.29
+  - tls://8.8.8.8
+  - tls://223.5.5.5
+  fallback-filter:
+    geoip: true
+  ipv6: false
+  nameserver:
+  - https://1.1.1.1/dns-query
+  - https://dns.alidns.com/dns-query
+  - https://doh.pub/dns-query
+  - https://dns.google/dns-query
+  use-hosts: true
+geox-url:
+    geoip: 'https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.dat'
+    geosite: 'https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat'
+log-level: info
+mode: Rule
+port: 7890
+proxies:
+    - { name: '🇭🇰 HK1 HKT HY 0.8x', server: hkt.sfcat.link, port: 443, type: hysteria2, password: d91d9e40-9fb0-4f1b-afcc-fcc761c7dbdf, up: 100, down: 100, sni: hkt.sfcat.link, mptcp: true }
+    - { name: '🇭🇰 HK2 DMIT HY 1.5x', server: dmit.sfcat.link, port: 46683, type: hysteria2, password: d91d9e40-9fb0-4f1b-afcc-fcc761c7dbdf, up: 2000, down: 2000, sni: dmit.sfcat.link, ports: 45000-55000, mptcp: true }
+    - { name: '🇭🇰 HK3 HYTRON HY 0.1x', server: direct11.sfcat.link, port: 45761, type: hysteria2, password: d91d9e40-9fb0-4f1b-afcc-fcc761c7dbdf, up: 500, down: 500, sni: direct11.sfcat.link, ports: 45000-55000, mptcp: true }
+proxy-groups:
+  - name: '代理'
+    type: select
+    proxies:
+      - '🇭🇰 HK1 HKT HY 0.8x'
+      - '🇭🇰 HK2 DMIT HY 1.5x'
+      - '🇭🇰 HK3 HYTRON HY 0.1x'
+rule-providers:
+  zhihu: { type: http, behavior: classical, url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/ZhihuAds/ZhihuAds.yaml", path: ./ruleset/ZhihuAds.yml, interval: 86400 }
+  alipay: { type: http, behavior: classical, url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/AliPay/AliPay.yaml", path: ./ruleset/AliPay.yaml, interval: 86400 }
+  a115: { type: http, behavior: classical, url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/115/115.yaml", path: ./ruleset/115.yaml, interval: 86400 }
+  Alibaba: { type: http, behavior: classical, url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Alibaba/Alibaba_Classical.yaml", path: ./ruleset/Alibaba.yaml, interval: 86400 }
+  pikpak: { type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/PikPak/PikPak.yaml", path: ./ruleset/pikpak.yaml, interval: 86400 }
+  Apkpure: { type: http, behavior: classical, url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Apkpure/Apkpure.yaml", path: ./ruleset/Apkpure.yaml, interval: 86400 }
+  AnTianKeJi: { type: http, behavior: classical, url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/AnTianKeJi/AnTianKeJi.yaml", path: ./ruleset/AnTianKeJi.yaml, interval: 86400 }
+  douyin: { type: http, behavior: classical, url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/DouYin/DouYin.yaml", path: ./ruleset/douyin.yaml, interval: 86400 }
+  cn: { type: http, behavior: domain, url: "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/cn_domain.yaml", path: ./ruleset/cn_domain.yaml, interval: 86400 }
+  cncidr: { type: http, behavior: classical, url: "https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/ChinaIPs/ChinaIPs_Classical_No_IPv6_No_Resolve.yaml", path: ./ruleset/cncidr.yaml, interval: 86400 }
+rules:
+- RULE-SET,AnTianKeJi,REJECT,no-resolve
+- GEOSITE,category-ads-all,REJECT,no-resolve
+- RULE-SET,zhihu,REJECT,no-resolve
+- DOMAIN-SUFFIX,kasperon.com,REJECT,no-resolve
+- DOMAIN-SUFFIX,mcwgame88.com,REJECT,no-resolve
+- DOMAIN-SUFFIX,awarded-best-vpn.com,REJECT,no-resolve
+- DOMAIN-KEYWORD,2cnjuh34jbpoint,REJECT,no-resolve
+- DOMAIN-KEYWORD,limurol,REJECT,no-resolve
+- DOMAIN-KEYWORD,tslomhfys,REJECT,no-resolve
+- DOMAIN-KEYWORD,dlfvgndsdfsn,REJECT,no-resolve
+- DOMAIN-KEYWORD,pncloudfl,REJECT,no-resolve
+- DOMAIN-KEYWORD,wbilvnmool,REJECT,no-resolve
+- DOMAIN-KEYWORD,googletagmanager,REJECT,no-resolve
+- DOMAIN-SUFFIX,shope.ee,REJECT,no-resolve
+- DOMAIN-SUFFIX,tallfriend.pro,REJECT,no-resolve
+- DOMAIN-SUFFIX,puhtml.com,REJECT,no-resolve
+- DOMAIN-KEYWORD,friendshipmale,REJECT,no-resolve
+- DOMAIN-KEYWORD,professionalswebcheck,REJECT,no-resolve
+- DOMAIN-KEYWORD,banquetunarmedgrater,REJECT,no-resolve
+- DOMAIN-KEYWORD,braceletdistraughtpoll,REJECT,no-resolve
+- DOMAIN-KEYWORD,unseenreport,REJECT,no-resolve
+- DOMAIN-KEYWORD,awarded-best-vpn,REJECT,no-resolve
+- DOMAIN-SUFFIX,loadingscripts.com,REJECT,no-resolve
+- DOMAIN-SUFFIX,locusflourishgarlic.com,REJECT,no-resolve
+- DOMAIN-KEYWORD,usetalentedpunk,REJECT,no-resolve
+- DOMAIN-KEYWORD,unseenreport,REJECT,no-resolve
+- DOMAIN-KEYWORD,rankjerryrounion,REJECT,no-resolve
+- DOMAIN-KEYWORD,intercom-messenger,REJECT,no-resolve
+- DOMAIN-KEYWORD,intercom-chat,REJECT,no-resolve
+- DOMAIN-SUFFIX,strawguineaequanimity.com,REJECT,no-resolve
+- DOMAIN-SUFFIX,banquetunarmedgrater.com,REJECT,no-resolve
+- DOMAIN-SUFFIX,tallfriend.pro,REJECT,no-resolve
+- DOMAIN-SUFFIX,xmegaxvideox.com,REJECT,no-resolve
+- DOMAIN-SUFFIX,exoclick.com,REJECT,no-resolve
+- DOMAIN-SUFFIX,kochava.com,REJECT,no-resolve
+- DOMAIN-SUFFIX,stripchat.com,REJECT,no-resolve
+- DOMAIN-SUFFIX,lou43.info,REJECT,no-resolve
+- DOMAIN-SUFFIX,wow888.bet,REJECT,no-resolve
+- DOMAIN-SUFFIX,tiao568.com,REJECT,no-resolve
+- DOMAIN-SUFFIX,jads.com,REJECT,no-resolve
+- DOMAIN-SUFFIX,juicyads.com,REJECT,no-resolve
+- DOMAIN-SUFFIX,log.avlyun.sec.intl.miui.com,REJECT,no-resolve
+- DOMAIN-SUFFIX,update.avlyun.sec.miui.com,REJECT,no-resolve
+- DOMAIN-SUFFIX,ixav-cse.avlyun.com,REJECT,no-resolve
+- DOMAIN-SUFFIX,logupdate.avlyun.sec.miui.com,REJECT,no-resolve
+- DOMAIN-SUFFIX,sdkconf.avlyun.com,REJECT,no-resolve
+- DOMAIN-SUFFIX,miav-cse.avlyun.com,REJECT,no-resolve
+- DOMAIN-SUFFIX,api.installer.xiaomi.com,REJECT,no-resolve
+- DOMAIN-SUFFIX,tmfsdk.m.qq.com,REJECT,no-resolve
+- DOMAIN-SUFFIX,a0.app.xiaomi.com,REJECT,no-resolve
+- DOMAIN-SUFFIX,api.sec.miui.com,REJECT,no-resolve
+- DOMAIN-SUFFIX,adv.sec.miui.com,REJECT,no-resolve
+- DOMAIN-SUFFIX,xlmc.sec.miui.com,REJECT,no-resolve
+- DOMAIN-SUFFIX,etl-xlmc-ssl.sandai.net,REJECT,no-resolve
+- DOMAIN-SUFFIX,cn.app.chat.xiaomi.net,REJECT,no-resolve
+- DOMAIN-SUFFIX,pdc.micloud.xiaomi.net,REJECT,no-resolve
+- DOMAIN-SUFFIX,a.hl.mi.com,REJECT,no-resolve
+- DOMAIN-SUFFIX,idm.api.io.mi.com,REJECT,no-resolve
+- DOMAIN-SUFFIX,api.jr.mi.com,REJECT,no-resolve
+- DOMAIN-SUFFIX,ssl-cdn.static.browser.mi-img.com,REJECT,no-resolve
+- DOMAIN-SUFFIX,flash.sec.miui.com,REJECT,no-resolve
+- DOMAIN-SUFFIX,miui-fxcse.avlyun.com,REJECT,no-resolve
+- DOMAIN-SUFFIX,google-plugin.vipsroom.net,DIRECT,no-resolve
+- DOMAIN-SUFFIX,speedtest.net,代理,no-resolve
+- RULE-SET,alipay,DIRECT,no-resolve
+- RULE-SET,Alibaba,代理,no-resolve
+- RULE-SET,pikpak,代理,no-resolve
+- RULE-SET,a115,代理,no-resolve
+- RULE-SET,Apkpure,代理,no-resolve
+- GEOSITE,google,代理,no-resolve
+- DOMAIN-SUFFIX,nexitally.speedtestcustom.com,代理,no-resolve
+- DOMAIN-SUFFIX,figma.com,代理,no-resolve
+- GEOIP,CN,代理,no-resolve
+- GEOIP,HK,代理,no-resolve
+- RULE-SET,cn,代理,no-resolve
+- RULE-SET,cncidr,代理
+- GEOSITE,CN,代理,no-resolve
+- MATCH,DIRECT,no-resolve
+socks-port: 7891
