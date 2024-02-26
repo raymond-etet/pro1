@@ -1,0 +1,546 @@
+{
+    "dns": {
+        "fakeip": {
+            "enabled": true,
+            "inet4_range": "198.18.0.0/15",
+            "inet6_range": "fc00::/18"
+        },
+        "independent_cache": true,
+        "rules": [
+            {
+                "outbound": [
+                    "any"
+                ],
+                "server": "local"
+            },
+            {
+                "disable_cache": true,
+                "geosite": [
+                    "category-ads-all"
+                ],
+                "server": "block"
+            },
+            { "geosite": [ "cnip", "cn", "private" ], "query_type": [ "A", "AAAA" ], "server": "remote" },
+            {
+                "query_type": [
+                    "A",
+                    "AAAA"
+                ],
+                "rewrite_ttl": 1,
+                "server": "fakeip"
+            },
+            {
+                "clash_mode": "global",
+                "server": "remote"
+            },
+            {
+                "clash_mode": "direct",
+                "server": "local"
+            },
+            {
+                "geosite": "cn",
+                "server": "local"
+            }
+        ],
+    "servers": [
+            {
+                "tag": "local",
+                "address": "h3://dns.google/dns-query",
+                "address_resolver": "dns_ipf",
+                "detour": "direct"
+            },
+            {
+                "tag": "dns_ipf",
+                "address": "https://1.1.1.1/dns-query",
+                "detour": "direct"
+            },
+            {
+                "tag": "remote",
+                "address": "h3://dns.alidns.com/dns-query",
+                "address_resolver": "dns_ip",
+                "detour": "select"
+            },
+            {
+                "tag": "dns_ip",
+                "address": "https://223.5.5.5/dns-query",
+                "detour": "select"
+            },
+            {
+                "address": "rcode://success",
+                "tag": "block"
+            },
+            {
+                "address": "fakeip",
+                "tag": "fakeip"
+            }
+        ],
+        "final": "local",
+        "strategy": "prefer_ipv4"
+    },
+    "experimental": {
+        "clash_api": {
+            "external_controller": "127.0.0.1:9090",
+            "secret": ""
+        }
+    },
+    "inbounds": [
+        {
+            "auto_route": true,
+            "domain_strategy": "prefer_ipv4",
+            "endpoint_independent_nat": true,
+            "inet4_address": "172.19.0.1/30",
+            "mtu": 9000,
+            "strict_route": true,
+            "type": "tun",
+            "stack":"system"
+        },
+        {
+            "domain_strategy": "prefer_ipv4",
+            "listen": "127.0.0.1",
+            "listen_port": 2333,
+            "tag": "socks-in",
+            "type": "socks",
+            "users": []
+        },
+        {
+            "domain_strategy": "prefer_ipv4",
+            "listen": "127.0.0.1",
+            "listen_port": 2334,
+            "tag": "mixed-in",
+            "type": "mixed",
+            "users": []
+        }
+    ],
+    "log": {
+        "disabled": true,
+        "level": "info",
+        "output": "box.log",
+        "timestamp": true
+    },
+    "outbounds": [
+        {
+            "tag": "select",
+            "type": "selector",
+            "default": "urltest",
+            "outbounds": [
+                "urltest",
+                "香港5",
+                "香港5-移动优化",
+                "香港2-移动优化",
+                "香港2-联通优化",
+                "香港2-中转",
+                "香港2-中转2",
+                "香港3-联通优化",
+                "香港3-中转",
+                "香港3-中转2",
+                "香港4-联通优化",
+                "香港4-中转",
+                "香港4-中转2",
+                "香港2",
+                "香港3-移动优化",
+                "香港4-移动优化",
+                "香港2-联通优化2",
+                "香港3-联通优化2",
+                "香港4-联通优化2",
+                "🇭🇰 HY 0.8x",
+                "🇭🇰 HY 0.1x"
+            ]
+        },
+        {
+            "server": "hk5.666197.xyz",
+            "server_port": 54211,
+            "tag": "香港5",
+            "tls": {
+                "enabled": true,
+                "server_name": "sg.555199.xyz"
+            },
+            "type": "hysteria",
+            "auth_str": "ebfbac8f-89c9-44c4-9e86-dc0e033961af",
+            "disable_mtu_discovery": true,
+            "down_mbps": 80,
+            "up_mbps": 50
+        },
+        {
+            "server": "yd.666197.xyz",
+            "server_port": 4424,
+            "tag": "香港5-移动优化",
+            "tls": {
+                "enabled": true,
+                "server_name": "sg.555199.xyz"
+            },
+            "type": "hysteria",
+            "auth_str": "ebfbac8f-89c9-44c4-9e86-dc0e033961af",
+            "disable_mtu_discovery": true,
+            "down_mbps": 200,
+            "up_mbps": 50
+        },
+        {
+            "server": "yd.666197.xyz",
+            "server_port": 40479,
+            "tag": "香港2-移动优化",
+            "tls": {
+                "enabled": true,
+                "server_name": "sg.555199.xyz"
+            },
+            "type": "hysteria",
+            "auth_str": "ebfbac8f-89c9-44c4-9e86-dc0e033961af",
+            "disable_mtu_discovery": true,
+            "down_mbps": 200,
+            "up_mbps": 50
+        },
+        {
+            "server": "lt.666197.xyz",
+            "server_port": 40479,
+            "tag": "香港2-联通优化",
+            "tls": {
+                "enabled": true,
+                "server_name": "sg.555199.xyz"
+            },
+            "type": "hysteria",
+            "auth_str": "ebfbac8f-89c9-44c4-9e86-dc0e033961af",
+            "disable_mtu_discovery": true,
+            "down_mbps": 200,
+            "up_mbps": 50
+        },
+        {
+            "server": "zf.666197.xyz",
+            "server_port": 40479,
+            "tag": "香港2-中转",
+            "tls": {
+                "enabled": true,
+                "server_name": "sg.555199.xyz"
+            },
+            "type": "hysteria",
+            "auth_str": "ebfbac8f-89c9-44c4-9e86-dc0e033961af",
+            "disable_mtu_discovery": true,
+            "down_mbps": 200,
+            "up_mbps": 50
+        },
+        {
+            "server": "zf2.666197.xyz",
+            "server_port": 40479,
+            "tag": "香港2-中转2",
+            "tls": {
+                "enabled": true,
+                "server_name": "sg.555199.xyz"
+            },
+            "type": "hysteria",
+            "auth_str": "ebfbac8f-89c9-44c4-9e86-dc0e033961af",
+            "disable_mtu_discovery": true,
+            "down_mbps": 200,
+            "up_mbps": 50
+        },
+        {
+            "server": "lt.666197.xyz",
+            "server_port": 42431,
+            "tag": "香港3-联通优化",
+            "tls": {
+                "enabled": true,
+                "server_name": "sg.555199.xyz"
+            },
+            "type": "hysteria",
+            "auth_str": "ebfbac8f-89c9-44c4-9e86-dc0e033961af",
+            "disable_mtu_discovery": true,
+            "down_mbps": 200,
+            "up_mbps": 50
+        },
+        {
+            "server": "zf.666197.xyz",
+            "server_port": 42431,
+            "tag": "香港3-中转",
+            "tls": {
+                "enabled": true,
+                "server_name": "sg.555199.xyz"
+            },
+            "type": "hysteria",
+            "auth_str": "ebfbac8f-89c9-44c4-9e86-dc0e033961af",
+            "disable_mtu_discovery": true,
+            "down_mbps": 200,
+            "up_mbps": 50
+        },
+        {
+            "server": "zf2.666197.xyz",
+            "server_port": 42431,
+            "tag": "香港3-中转2",
+            "tls": {
+                "enabled": true,
+                "server_name": "sg.555199.xyz"
+            },
+            "type": "hysteria",
+            "auth_str": "ebfbac8f-89c9-44c4-9e86-dc0e033961af",
+            "disable_mtu_discovery": true,
+            "down_mbps": 200,
+            "up_mbps": 50
+        },
+        {
+            "server": "lt.666197.xyz",
+            "server_port": 47345,
+            "tag": "香港4-联通优化",
+            "tls": {
+                "enabled": true,
+                "server_name": "sg.555199.xyz"
+            },
+            "type": "hysteria",
+            "auth_str": "ebfbac8f-89c9-44c4-9e86-dc0e033961af",
+            "disable_mtu_discovery": true,
+            "down_mbps": 200,
+            "up_mbps": 50
+        },
+        {
+            "server": "zf.666197.xyz",
+            "server_port": 47345,
+            "tag": "香港4-中转",
+            "tls": {
+                "enabled": true,
+                "server_name": "sg.555199.xyz"
+            },
+            "type": "hysteria",
+            "auth_str": "ebfbac8f-89c9-44c4-9e86-dc0e033961af",
+            "disable_mtu_discovery": true,
+            "down_mbps": 200,
+            "up_mbps": 50
+        },
+        {
+            "server": "zf2.666197.xyz",
+            "server_port": 47345,
+            "tag": "香港4-中转2",
+            "tls": {
+                "enabled": true,
+                "server_name": "sg.555199.xyz"
+            },
+            "type": "hysteria",
+            "auth_str": "ebfbac8f-89c9-44c4-9e86-dc0e033961af",
+            "disable_mtu_discovery": true,
+            "down_mbps": 200,
+            "up_mbps": 50
+        },
+        {
+            "server": "hk2.666197.xyz",
+            "server_port": 35222,
+            "tag": "香港2",
+            "tls": {
+                "enabled": true,
+                "server_name": "sg.555199.xyz"
+            },
+            "type": "hysteria",
+            "auth_str": "ebfbac8f-89c9-44c4-9e86-dc0e033961af",
+            "disable_mtu_discovery": true,
+            "down_mbps": 200,
+            "up_mbps": 50
+        },
+        {
+            "server": "hk3.666197.xyz",
+            "server_port": 35222,
+            "tag": "香港3-移动优化",
+            "tls": {
+                "enabled": true,
+                "server_name": "sg.555199.xyz"
+            },
+            "type": "hysteria",
+            "auth_str": "ebfbac8f-89c9-44c4-9e86-dc0e033961af",
+            "disable_mtu_discovery": true,
+            "down_mbps": 200,
+            "up_mbps": 50
+        },
+        {
+            "server": "hk4.666197.xyz",
+            "server_port": 35222,
+            "tag": "香港4-移动优化",
+            "tls": {
+                "enabled": true,
+                "server_name": "sg.555199.xyz"
+            },
+            "type": "hysteria",
+            "auth_str": "ebfbac8f-89c9-44c4-9e86-dc0e033961af",
+            "disable_mtu_discovery": true,
+            "down_mbps": 200,
+            "up_mbps": 50
+        },
+        {
+            "server": "lt2.666197.xyz",
+            "server_port": 40479,
+            "tag": "香港2-联通优化2",
+            "tls": {
+                "enabled": true,
+                "server_name": "sg.555199.xyz"
+            },
+            "type": "hysteria",
+            "auth_str": "ebfbac8f-89c9-44c4-9e86-dc0e033961af",
+            "disable_mtu_discovery": true,
+            "down_mbps": 200,
+            "up_mbps": 50
+        },
+        {
+            "server": "lt2.666197.xyz",
+            "server_port": 42431,
+            "tag": "香港3-联通优化2",
+            "tls": {
+                "enabled": true,
+                "server_name": "sg.555199.xyz"
+            },
+            "type": "hysteria",
+            "auth_str": "ebfbac8f-89c9-44c4-9e86-dc0e033961af",
+            "disable_mtu_discovery": true,
+            "down_mbps": 200,
+            "up_mbps": 50
+        },
+        {
+            "server": "lt2.666197.xyz",
+            "server_port": 47345,
+            "tag": "香港4-联通优化2",
+            "tls": {
+                "enabled": true,
+                "server_name": "sg.555199.xyz"
+            },
+            "type": "hysteria",
+            "auth_str": "ebfbac8f-89c9-44c4-9e86-dc0e033961af",
+            "disable_mtu_discovery": true,
+            "down_mbps": 200,
+            "up_mbps": 50
+        },
+        {
+            "password": "d91d9e40-9fb0-4f1b-afcc-fcc761c7dbdf",
+            "server": "hkt.sfcat.link",
+            "server_port": 443,
+            "tag": "🇭🇰 HY 0.8x",
+            "tls": {
+                "enabled": true,
+                "server_name": "hkt.sfcat.link"
+            },
+            "type": "hysteria2",
+            "down_mbps": 100,
+            "up_mbps": 100
+        },
+        {
+            "password": "d91d9e40-9fb0-4f1b-afcc-fcc761c7dbdf",
+            "server": "direct11.sfcat.link",
+            "server_port": 52911,
+            "tag": "🇭🇰 HY 0.1x",
+            "tls": {
+                "enabled": true,
+                "server_name": "direct11.sfcat.link"
+            },
+            "type": "hysteria2",
+            "down_mbps": 500,
+            "up_mbps": 500
+        },
+        {
+            "tag": "urltest",
+            "type": "urltest",
+            "url":"http://wifi.vivo.com.cn/generate_204",
+            "outbounds": [
+                "香港5",
+                "香港5-移动优化",
+                "香港2-移动优化",
+                "香港2-联通优化",
+                "香港2-中转",
+                "香港2-中转2",
+                "香港3-联通优化",
+                "香港3-中转",
+                "香港3-中转2",
+                "香港4-联通优化",
+                "香港4-中转",
+                "香港4-中转2",
+                "香港2",
+                "香港3-移动优化",
+                "香港4-移动优化",
+                "香港2-联通优化2",
+                "香港3-联通优化2",
+                "香港4-联通优化2",
+                "🇭🇰 HY 0.8x",
+                "🇭🇰 HY 0.1x"
+            ],
+            "interval":"3m","tolerance":50,"idle_timeout":"4m"
+        },
+        {
+            "tag": "direct",
+            "type": "direct"
+        },
+        {
+            "tag": "block",
+            "type": "block"
+        },
+        {
+            "tag": "dns-out",
+            "type": "dns"
+        }
+    ],
+    "route": {
+        "auto_detect_interface": true,
+        "rules": [
+            { "rule_set": [ "wechat" ], "outbound": "direct" },
+            { "domain_keyword": ["gcash"], "outbound": "direct"},
+            { "rule_set": [ "ads" ], "outbound": "block" },
+            {
+                "geosite": "category-ads-all",
+                "outbound": "block"
+            },
+            { "rule_set": [ "cn" ], "outbound": "select" },
+            { "rule_set": [ "cnip" ], "outbound": "select" },
+            {
+                "outbound": "dns-out",
+                "port": 53
+            },
+            {
+                "clash_mode": "direct",
+                "outbound": "direct"
+            },
+            {
+                "clash_mode": "global",
+                "outbound": "select"
+            },
+            {
+                "geoip": [
+                    "cn",
+                    "private"
+                ],
+                "outbound": "select"
+            }
+        ],
+        "rule_set": [
+            {
+              "tag": "wechat",
+              "type": "remote",
+              "format": "source",
+              "url": "https://raw.githubusercontent.com/Toperlock/sing-box-geosite/main/wechat.json",
+              "download_detour": "direct"
+            },
+            {
+              "tag": "ads",
+              "type": "remote",
+              "format": "binary",
+              "url": "https://fastly.jsdelivr.net/gh/DustinWin/ruleset_geodata@sing-box/ads.srs",
+              "download_detour": "direct"
+            },
+            {
+              "tag": "private",
+              "type": "remote",
+              "format": "binary",
+              "url": "https://fastly.jsdelivr.net/gh/DustinWin/ruleset_geodata@sing-box/private.srs",
+              "download_detour": "direct"
+            },
+            {
+              "tag": "cn",
+              "type": "remote",
+              "format": "binary",
+              "url": "https://fastly.jsdelivr.net/gh/DustinWin/ruleset_geodata@sing-box/cn.srs",
+              "download_detour": "direct"
+            },
+            {
+              "tag": "privateip",
+              "type": "remote",
+              "format": "binary",
+              "url": "https://fastly.jsdelivr.net/gh/DustinWin/ruleset_geodata@sing-box/privateip.srs",
+              "download_detour": "direct"
+            },
+            {
+              "tag": "cnip",
+              "type": "remote",
+              "format": "binary",
+              "url": "https://fastly.jsdelivr.net/gh/DustinWin/ruleset_geodata@sing-box/cnip.srs",
+              "download_detour": "direct"
+            }
+          ],
+           "final":"direct"
+    }
+}
