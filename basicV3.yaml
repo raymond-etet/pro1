@@ -1,0 +1,462 @@
+{
+    "dns": {
+        "fakeip": {
+            "enabled": true,
+            "inet4_range": "198.18.0.0/15",
+            "inet6_range": "fc00::/18"
+        },
+        "independent_cache": true,
+        "rules": [
+            {
+                "outbound": [
+                    "any"
+                ],
+                "server": "local"
+            },
+            {
+                "disable_cache": true,
+                "geosite": [
+                    "category-ads-all"
+                ],
+                "server": "block"
+            },
+            {
+                "geosite": [
+                    "cn"
+                ],
+                "server": "local"
+            },
+            {
+                "geoip": [
+                    "cn",
+                    "private"
+                ],
+                "server": "local"
+            },
+            {
+                "query_type": [
+                    "A",
+                    "AAAA"
+                ],
+                "rewrite_ttl": 1,
+                "server": "fakeip"
+            },
+            {
+                "clash_mode": "global",
+                "server": "remote"
+            },
+            {
+                "clash_mode": "direct",
+                "server": "local"
+            },
+            {
+                "geosite": "cn",
+                "server": "local"
+            }
+        ],
+        "servers": [
+            {
+                "address": "h3://dns.google/dns-query",
+                "address_resolver": "dns_resolver2",
+                "detour": "select",
+                "tag": "remote"
+            },
+            {
+                "tag": "local",
+                "address": "h3://dns.alidns.com/dns-query",
+                "address_resolver": "dns_resolver",
+                "strategy": "ipv4_only",
+                "detour": "direct"
+            },
+            {
+                "tag": "dns_block",
+                "address": "rcode://refused"
+            },
+            {
+                "tag": "dns_resolver2",
+                "address": "8.8.8.8",
+                "strategy": "ipv4_only",
+                "detour": "direct"
+            },
+            {
+                "tag": "dns_resolver",
+                "address": "223.5.5.5",
+                "strategy": "ipv4_only",
+                "detour": "direct"
+            },
+            {
+                "address": "rcode://success",
+                "tag": "block"
+            },
+            {
+                "address": "fakeip",
+                "tag": "fakeip"
+            }
+        ],
+        "final": "remote",
+        "reverse_mapping": true,
+        "independent_cache": true,
+        "fakeip": {
+          "enabled": true,
+          "inet4_range": "198.18.0.0/15",
+          "inet6_range": "fc00::/18" 
+        }
+    },
+    "experimental": {
+        "clash_api": {
+            "external_controller": "127.0.0.1:9090",
+            "secret": ""
+        }
+    },
+    "inbounds": [
+        {
+          "tag": "tun",
+          "type": "tun",
+          "inet4_address": "172.19.0.1/30",
+          "inet6_address": "fdfe:dcba:9876::1/126",
+          "mtu": 9000,
+          "stack": "system",
+          "auto_route": true,
+          "strict_route": true, 
+          "sniff": true,
+          "platform": {
+            "http_proxy": {
+              "enabled": false,
+              "server": "127.0.0.1",
+              "server_port": 10080
+            }
+          }
+        },
+        {
+          "tag": "mixed",  
+          "type": "mixed",
+          "listen": "127.0.0.1",
+          "listen_port": 10080,
+          "sniff": true,
+          "domain_strategy": "prefer_ipv4"
+        }
+    ],
+    "log": {},
+    "outbounds": [
+        {
+            "tag": "select",
+            "type": "selector",
+            "default": "urltest",
+            "outbounds": [
+                "urltest",
+                "15新加坡-全网优化(hy2)",
+                "24新加坡-联通/移动(hy2)", 
+                "1香港集群-全网优化(hy2)",
+                "2香港集群-全网优化(hy2)",
+                "15新加坡-全网优化(新协议)",
+                "15新加坡-专线(iOS优化)", 
+                "24新加坡-联通/移动(新协议)",
+                "1香港集群-全网优化(新协议)",
+                "2香港集群-全网优化(新协议)"
+            ]
+        },
+        {
+            "password": "a6662b34-801d-4623-ba5c-73fe62e73e00",
+            "server": "15sg.prometheusnet01.xyz",
+            "server_port": 31971,
+            "tag": "15新加坡-全网优化(hy2)",
+            "tls": {
+                "enabled": true,
+                "server_name": "15sg.prometheusnet01.xyz",
+                "insecure": true
+            },
+            "type": "hysteria2"
+        },
+        {
+            "password": "a6662b34-801d-4623-ba5c-73fe62e73e00",
+            "server": "24sg.prometheusnet01.xyz",
+            "server_port": 28738,
+            "tag": "24新加坡-联通/移动(hy2)",
+            "tls": {
+                "enabled": true,
+                "server_name": "24sg.prometheusnet01.xyz",
+                "insecure": true
+            },
+            "type": "hysteria2"
+        },
+        {
+            "password": "a6662b34-801d-4623-ba5c-73fe62e73e00",
+            "server": "1hk.prometheusnet01.xyz",
+            "server_port": 24324,
+            "tag": "1香港集群-全网优化(hy2)",
+            "tls": {
+                "enabled": true,
+                "server_name": "1hk.prometheusnet01.xyz",
+                "insecure": true
+            },
+            "type": "hysteria2"
+        },
+        {
+            "password": "a6662b34-801d-4623-ba5c-73fe62e73e00",
+            "server": "2hk.prometheusnet01.xyz",
+            "server_port": 39602,
+            "tag": "2香港集群-全网优化(hy2)",
+            "tls": {
+                "enabled": true,
+                "server_name": "2hk.prometheusnet01.xyz",
+                "insecure": true
+            },
+            "type": "hysteria2"
+        },
+        {
+            "server": "15sg.prometheusnet01.xyz",
+            "server_port": 4430,
+            "tag": "15新加坡-全网优化(新协议)", 
+            "tls": {
+                "enabled": true,
+                "server_name": "15sg.prometheusnet01.xyz",
+                "alpn": [
+                    "h3"
+                ],
+                "insecure": true
+            },
+            "type": "hysteria",
+            "auth_str": "a6662b34-801d-4623-ba5c-73fe62e73e00",
+            "disable_mtu_discovery": true,
+            "down_mbps": 150,
+            "up_mbps": 70
+        },
+        {
+            "password": "a6662b34-801d-4623-ba5c-73fe62e73e00",
+            "server": "dnsmart.dg-cdn.mob.networklinkpro.com",
+            "server_port": 17883,
+            "tag": "15新加坡-专线(iOS优化)", 
+            "type": "shadowsocks",
+            "method": "chacha20-ietf-poly1305"
+        },
+        {
+            "server": "24sg.prometheusnet01.xyz",
+            "server_port": 4430,  
+            "tag": "24新加坡-联通/移动(新协议)",
+            "tls": {
+                "enabled": true,
+                "server_name": "24sg.prometheusnet01.xyz",
+                "alpn": [
+                    "h3"  
+                ],
+                "insecure": true
+            },
+            "type": "hysteria",
+            "auth_str": "a6662b34-801d-4623-ba5c-73fe62e73e00",
+            "disable_mtu_discovery": true,
+            "down_mbps": 150,
+            "up_mbps": 70
+        },
+        {
+            "server": "1hk.prometheusnet01.xyz",
+            "server_port": 4430,
+            "tag": "1香港集群-全网优化(新协议)",
+            "tls": {
+                "enabled": true,
+                "server_name": "1hk.prometheusnet01.xyz",
+                "alpn": [
+                    "h3"
+                ], 
+                "insecure": true
+            },
+            "type": "hysteria",
+            "auth_str": "a6662b34-801d-4623-ba5c-73fe62e73e00",
+            "disable_mtu_discovery": true,
+            "down_mbps": 150,
+            "up_mbps": 70
+        },
+        {  
+            "server": "2hk.prometheusnet01.xyz",
+            "server_port": 4430,
+            "tag": "2香港集群-全网优化(新协议)",
+            "tls": {
+                "enabled": true,
+                "server_name": "2hk.prometheusnet01.xyz",
+                "alpn": [
+                    "h3"
+                ],
+                "insecure": true
+            },
+            "type": "hysteria",
+            "auth_str": "a6662b34-801d-4623-ba5c-73fe62e73e00",
+            "disable_mtu_discovery": true,
+            "down_mbps": 150,
+            "up_mbps": 70
+        },
+        {
+            "tag": "urltest",
+            "type": "urltest",
+            "tolerance": 50,
+            "url": "http://wifi.vivo.com.cn/generate_204", 
+            "interval": "2m",
+            "outbounds": [
+                "15新加坡-全网优化(hy2)",
+                "24新加坡-联通/移动(hy2)",
+                "1香港集群-全网优化(hy2)",  
+                "2香港集群-全网优化(hy2)",
+                "15新加坡-全网优化(新协议)",
+                "15新加坡-专线(iOS优化)",
+                "24新加坡-联通/移动(新协议)",
+                "1香港集群-全网优化(新协议)",
+                "2香港集群-全网优化(新协议)"
+            ]  
+        },
+        {
+            "tag": "direct",
+            "type": "direct"
+        },
+        {
+            "tag": "block",
+            "type": "block"
+        },
+        {
+            "tag": "dns-out",
+            "type": "dns"
+        }
+    ],
+    "route": {
+        "auto_detect_interface": true,
+        "rules": [
+            {
+                "domain_keyword": [
+                    "2cnjuh34jbpoint",
+                    "limurol",
+                    "tslomhfys",
+                    "dlfvgndsdfsn",
+                    "pncloudfl",
+                    "wbilvnmool",
+                    "googletagmanager",
+                    "friendshipmale",
+                    "professionalswebcheck",
+                    "banquetunarmedgrater",
+                    "braceletdistraughtpoll",
+                    "unseenreport",
+                    "awarded-best-vpn",
+                    "usetalentedpunk",
+                    "unseenreport",
+                    "rankjerryrounion",
+                    "intercom-messenger",
+                    "intercom-chat"
+                ],
+                "domain_suffix": [
+                    "kasperon.com",
+                    "mcwgame88.com",
+                    "awarded-best-vpn.com",
+                    "shope.ee",
+                    "tallfriend.pro",
+                    "puhtml.com",
+                    "loadingscripts.com",
+                    "locusflourishgarlic.com",
+                    "strawguineaequanimity.com",
+                    "banquetunarmedgrater.com",
+                    "tallfriend.pro",
+                    "xmegaxvideox.com",
+                    "exoclick.com",
+                    "kochava.com",
+                    "stripchat.com",
+                    "lou43.info",
+                    "wow888.bet",
+                    "tiao568.com",
+                    "jads.com",
+                    "juicyads.com",
+                    "log.avlyun.sec.intl.miui.com",
+                    "update.avlyun.sec.miui.com",
+                    "ixav-cse.avlyun.com",
+                    "logupdate.avlyun.sec.miui.com",
+                    "sdkconf.avlyun.com",
+                    "miav-cse.avlyun.com",
+                    "api.installer.xiaomi.com",
+                    "tmfsdk.m.qq.com",
+                    "a0.app.xiaomi.com",
+                    "api.sec.miui.com",
+                    "adv.sec.miui.com",
+                    "xlmc.sec.miui.com",
+                    "etl-xlmc-ssl.sandai.net",
+                    "cn.app.chat.xiaomi.net",
+                    "pdc.micloud.xiaomi.net",
+                    "a.hl.mi.com",
+                    "idm.api.io.mi.com",
+                    "api.jr.mi.com",
+                    "ssl-cdn.static.browser.mi-img.com",
+                    "flash.sec.miui.com",
+                    "miui-fxcse.avlyun.com"
+                ],
+                "outbound": "block"
+            },
+            {
+                "geosite": "category-ads-all",
+                "outbound": "block"
+            },
+            {
+                "outbound": "dns-out",
+                "port": 53
+            },
+            {
+                "clash_mode": "direct",
+                "outbound": "direct"
+            },
+            {
+                "clash_mode": "global",
+                "outbound": "select"
+            },
+            {
+                "process_name": [
+                    "com.paymaya",
+                    "com.globe.gcash.android"
+                ],
+                "outbound": "direct"
+            },
+            {
+                "domain_suffix": [
+                    "apkpure.com",
+                    "cdnpure.com",
+                    "pureapk.com",
+                    "winudf.com",
+                    "apkpure.net",
+                    "speedtest.net"
+                ],
+                "outbound": "select"  
+            },
+            {
+                "domain_suffix": [
+                    "cdn.usefathom.com",
+                    "anthropic.com",
+                    "claude.ai"
+                ],
+                "outbound": "direct"  
+            },
+            {
+                "domain_suffix": [
+                    "appsflayer.com",
+                    "binance.cloud",
+                    "binance.com",
+                    "binance.me",
+                    "binancecnt.com",
+                    "binancefuture.com",
+                    "bnappzh.co",
+                    "bnbstatic.com",
+                    "bnbzh.ac",
+                    "bntrace.com",
+                    "saasexch.cc",
+                    "saasexch.com"
+                ],
+                "domain_keyword": [
+                    "binance"  
+                ],
+                "outbound": "select"  
+            },
+            {
+                "geosite": "cn",
+                "outbound": "select"
+            },
+            {
+                "geoip": [
+                    "cn",
+                    "private"
+                ],
+                "outbound": "select"
+            }
+        ],
+         "final": "direct"
+    }
+}
